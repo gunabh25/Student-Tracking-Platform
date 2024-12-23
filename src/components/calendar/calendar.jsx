@@ -97,7 +97,7 @@ export default function Calendar() {
         className="shadow-lg rounded-lg"
       />
 
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <h2 className="text-xl font-bold">Select a student to mark attendance:</h2>
         <ul className="mt-2 grid grid-cols-2 gap-4">
           {students.map((student) => (
@@ -114,7 +114,7 @@ export default function Calendar() {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
 
       {showPopup && (
         <div className="fixed z-10 inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">

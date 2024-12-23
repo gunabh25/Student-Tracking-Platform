@@ -33,37 +33,24 @@ import { auth, signOut } from "@/auth";
 export default async function Header() {
   const { user } = await auth();
 
-  const sidebarItems = [
-    {
-      id: 1,
-      name: "All Teachers",
-      link: "/dashboard/all_teachers",
-      tooltiptext: "All Teachers",
-      logo: <Home className="h-5 w-5" />,
-    },
-    {
-      id: 2,
-      name: "All Students",
-      link: "/dashboard/all_students",
-      tooltiptext: "All Students",
-      logo: <Package className="h-5 w-5" />,
-    },
-    // {
-    //   id: 3,
-    //   name: "Customers",
-    //   link: "/dashboard/customers",
-    //   tooltiptext: "Customers",
-    //   logo: <Users2 className="h-5 w-5" />,
-    // },
-    // {
-    //   id: 3,
-    //   name: "contact",
-    //   link: "/dashboard/contactlogs",
-    //   tooltiptext: "Contact Logs",
-    //   logo: <ContactRoundIcon className="h-5 w-5" />,
-    // },
-  ];
 
+
+  const studentSidebarItems = [
+    // Define sidebar items for students
+    // { id: 1, name: 'Student Dashboard', link: '/dashboard/student' },
+    // { id: 2, name: 'Attendance', link: '/attendance' },
+  ];
+  
+  const nonStudentSidebarItems = [
+    // Define sidebar items for non-students
+    { id: 1, name: 'All Students', link: '/dashboard/all_students' },
+    { id: 2, name: 'All Teachers', link: '/dashboard/all_teachers' },
+    // Add more non-student-specific items here
+  ];
+  
+  const sidebarItems = user.isStudent ? studentSidebarItems : nonStudentSidebarItems;
+
+  
   return (
     <>
       <nav className=" py-4 sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -111,15 +98,16 @@ export default async function Header() {
                 </Link>
                 <span className="sr-only">company logo</span>
               </Link>
-              {sidebarItems.map((item, index) => (
-                <Link
-                  href={item.link}
-                  key={item.id}
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                >
-                   {item.name}
-                </Link>
-              ))}
+            
+              {sidebarItems.map((item) => (
+      <Link
+        href={item.link}
+        key={item.id}
+        className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+      >
+        {item.name}
+      </Link>
+    ))}
             </nav>
         </div>
 
