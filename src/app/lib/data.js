@@ -1,4 +1,4 @@
-import { User } from "./models";
+import { User, Student } from "./models";
 import { connectToDB } from "./utils";
 
 // Fetch users based on a search query and company ID
@@ -30,6 +30,36 @@ export const fetchUser = async (id) => {
   } catch (err) {
     console.log(err);
     throw new Error("Failed to fetch user!");
+  }
+};
+
+
+// Function to fetch a single student by ID
+export const fetchStudentById = async (id) => {
+  console.log(id);
+  try {
+    await connectToDB();
+    // Find the student with the given ID
+    const student = await Student.findOne({ _id: id });
+    console.log(student);
+    return student;
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to fetch student!");
+  }
+};
+
+// Function to fetch all students
+export const fetchStudents = async () => {
+  try {
+    await connectToDB();
+    // Find all students
+    const students = await Student.find();
+    console.log(students);
+    return students;
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to fetch students!");
   }
 };
 

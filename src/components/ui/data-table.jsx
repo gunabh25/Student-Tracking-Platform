@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 
-export function DataTable({ columns, data, addNewLink, addNewText }) {
+export function DataTable({ columns, data, addNewLink, addNewText,  }) {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -63,7 +63,7 @@ export function DataTable({ columns, data, addNewLink, addNewText }) {
     <div className="w-full">
       <div className="flex justify-between items-center py-4">
         <div className="flex flex-col md:flex-row space-x-2">
-        <DropdownMenu>
+        {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="">
                 Filter by year <ChevronDown className="ml-2 h-4 w-4" />
@@ -87,7 +87,7 @@ export function DataTable({ columns, data, addNewLink, addNewText }) {
               <DropdownMenuCheckboxItem>C</DropdownMenuCheckboxItem>{" "}
               <DropdownMenuCheckboxItem>D</DropdownMenuCheckboxItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
           <Input
             placeholder="Search by name..."
             value={
@@ -98,7 +98,7 @@ export function DataTable({ columns, data, addNewLink, addNewText }) {
                 .getColumn(columns[1].accessorKey)
                 ?.setFilterValue(event.target.value)
             }
-            className="max-w-sm"
+            className="max-w-md"
           />
         </div>
         <DropdownMenu>

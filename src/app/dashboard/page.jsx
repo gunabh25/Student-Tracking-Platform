@@ -19,7 +19,7 @@ import { fetchCustomers } from "../lib/data";
 import { fetchProducts } from "../lib/data";
 import { fetchEnquiries } from "../lib/data";
 import { auth } from "@/auth";
-import { columns } from "./all_students/userTableColumns";
+import { columns } from "./all_teachers/userTableColumns";
 import HomePageGreeting from "@/components/ui/homePageGreeting";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";

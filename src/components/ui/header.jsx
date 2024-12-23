@@ -30,13 +30,13 @@ export default async function Header() {
   const { user } = await auth();
 
   const sidebarItems = [
-    // {
-    //   id: 1,
-    //   name: "Home",
-    //   link: "/dashboard",
-    //   tooltiptext: "Home",
-    //   logo: <Home className="h-5 w-5" />,
-    // },
+    {
+      id: 1,
+      name: "All Teachers",
+      link: "/dashboard/all_teachers",
+      tooltiptext: "All Teachers",
+      logo: <Home className="h-5 w-5" />,
+    },
     {
       id: 2,
       name: "All Students",

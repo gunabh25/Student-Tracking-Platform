@@ -62,12 +62,71 @@ const userSchema = new mongoose.Schema(
     address: {
       type: String,
     },
+    role: {
+      type: String,
+      default: 'teacher',
+    },
   },
   { timestamps: true }
 );
 
+const studentSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    companyID: {
+      type: String,
+      required: true,
+    },
+    year: {
+      type: Number,
+      required: true,
+      enum: [1, 2, 3, 4],
+    },
+    section: {
+      type: String,
+      required: true,
+      enum: ['A', 'B', 'C', 'D'],
+    },
+    admissionNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    address: {
+      type: String,
+    },
+    phone: {
+      type: String,
+    },
+    role: {
+      type: String,
+      default: 'student',
+    },
+    attendance: [
+      {
+        date: {
+          type: Date,
+          required: true,
+        },
+        status: {
+          type: String,
+          required: true,
+          enum: ['Present', 'Absent'],
+        },
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
+
 // Exporting the models
 export const User = mongoose.models.User || mongoose.model("User", userSchema); 
-// export const Product = mongoose.models.Product || mongoose.model("Product", productSchema);
-// export const Customer = mongoose.models.Customer || mongoose.model("Customer", customerSchema);
-// export const Enquiry = mongoose.models.Enquiry || mongoose.model("Enquiry", enquirySchema);
+export const Student = mongoose.models.Student || mongoose.model('Student', studentSchema);

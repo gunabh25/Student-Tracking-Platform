@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { User} from "./models";
+import { User, Student} from "./models";
 import { connectToDB } from "./utils";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { signIn, auth, signOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
 
-// Function to add a new user
+// Function to add a new teacher
 export const addUser = async (formData) => {
   // Extract user data from form
   const { username, email, password, phone, address, img, isAdmin, isActive, companyID, admissionNumber, rollNumber, branch, year, section } =
@@ -54,7 +54,7 @@ export const addUser = async (formData) => {
   redirect("/dashboard/all_students");
 };
 
-// Function to update an existing user
+// Function to update an existing teacher
 export const updateUser = async (formData) => {
   // Extract updated user data from form
   const { id, username, email, password, phone, address, isAdmin, isActive, year, section, admissionNumber, rollNumber } =
@@ -117,6 +117,84 @@ export const deleteUser = async (id) => {
     throw new Error("Failed to delete user!");
   }
 };
+
+
+// Function to add a new student
+export const addStudent = async (formData) => {
+  // Extract student data from form
+  const { firstName, lastName, year, section, admissionNumber, address, phone, companyID } = Object.fromEntries(formData);
+
+  console.log("formData is", formData);
+
+  try {
+    await connectToDB();
+
+    // Create a new student
+    const newStudent = new Student({
+      firstName,
+      lastName,
+      year,
+      section,
+      admissionNumber,
+      address,
+      phone,
+      companyID,
+    });
+
+    // Save the student to the database
+    await newStudent.save();
+
+    console.log("Student added successfully");
+    toast.success("Student added successfully");
+    revalidatePath("/students");
+  } catch (err) {
+    console.log(err);
+    toast.error("Failed to add student!");
+    throw new Error("Failed to add student!");
+  }
+};
+
+// Function to update an existing student
+export const updateStudent = async (id, formData) => {
+  // Extract student data from form
+  const { firstName, lastName, year, section, admissionNumber, address, phone, companyID, attendance } = Object.fromEntries(formData);
+
+  console.log("formData is", formData);
+
+  try {
+    await connectToDB();
+
+    // Find the student by ID and update their details
+    const updatedStudent = await Student.findByIdAndUpdate(
+      id,
+      {
+        firstName,
+        lastName,
+        year,
+        section,
+        admissionNumber,
+        address,
+        phone,
+        companyID,
+        attendance: attendance.map((att) => ({
+          date: new Date(att.date),
+          status: att.status,
+        })),
+      },
+      { new: true }
+    );
+
+    console.log("Student updated successfully");
+    toast.success("Student updated successfully");
+    revalidatePath("/students");
+    return updatedStudent;
+  } catch (err) {
+    console.log(err);
+    toast.error("Failed to update student!");
+    throw new Error("Failed to update student!");
+  }
+};
+
 
 // Function to authenticate a user
 export const authenticate = async (prevState, formData) => {
