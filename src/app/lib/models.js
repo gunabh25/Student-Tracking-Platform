@@ -34,16 +34,7 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    admissionNumber:{
-      type: String,
-      required: true,
-      unique: true,
-    },
-    rollNumber:{
-      type: Number,
-      required: true,
-      unique: true,
-    },
+   
     branch: {
       type: String,
       // required: true,
@@ -93,8 +84,13 @@ const studentSchema = new mongoose.Schema(
       required: true,
       enum: ['A', 'B', 'C', 'D'],
     },
-    admissionNumber: {
+    admissionNumber:{
       type: String,
+      required: true,
+      unique: true,
+    },
+    rollNumber:{
+      type: Number,
       required: true,
       unique: true,
     },
