@@ -3,6 +3,7 @@
 import { ThemeToggle } from "@/components/theme-button";
 import React from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 
 export const metadata = {
@@ -31,11 +32,11 @@ function page() {
           </p>
 
           <Button className="w-1/2 my-6">
-            <a
+            <Link
               href="/signup"
               
             >{" "}
-            Sign up again</a>
+            Sign up again</Link>
           </Button>
         </div>
       </div>

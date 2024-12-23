@@ -164,14 +164,21 @@ export default async function Header() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        {user.isStudent && (
+        {/* {user?.isStudent ? (
           <DropdownMenuItem>
-            <Link href="/dashboard/student_profile">
+          <Link href={`/dashboard/student/${user?._id.toString()}`}>
                 <User className="mr-2 h-4 w-4" />
                 <span>view Profile</span>
             </Link>
           </DropdownMenuItem>
-        )}
+        ) : (
+          <DropdownMenuItem>
+     <Link href={`/dashboard/student/${user?._id.toString()}`} className="flex items-center">
+                <User className="mr-2 h-4 w-4" />
+                <span>view Profile</span>
+            </Link>
+          </DropdownMenuItem>
+        )} */}
         <DropdownMenuItem>
           <form
             className="w-full"

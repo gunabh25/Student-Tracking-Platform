@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/table";
 import { DataTable } from "@/components/ui/data-table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import CalendarLayout from "@/components/calendar/calendarLayout";
 
 async function page() {
   const session = await auth();
@@ -76,8 +77,7 @@ async function page() {
       {session.user.isStudent ? (
         <div>
           {/* Render a different UI for students */}
-          <h1>
-            Welcome, {session.user.username} </h1>
+        <CalendarLayout/>
         </div>
       ) : (
         <DataTable
