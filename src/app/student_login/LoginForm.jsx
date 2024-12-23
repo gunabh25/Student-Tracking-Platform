@@ -15,11 +15,11 @@ export const loginSchema = z.object({
   admissionNumber: z
     .string()
     .min(5, 'Admission number must be at least 5 characters')
-    .max(10, 'Admission number must not exceed 10 characters')
+    .max(15, 'Admission number must not exceed 15 characters')
     .regex(/^[A-Z0-9]+$/, 'Admission number must contain only uppercase letters and numbers'),
   password: z
     .string()
-    .min(8, 'Password must be at least 8 characters')
+    .min(1, 'Password must be at least 1 characters')
     .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, 
       'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character')
 });
