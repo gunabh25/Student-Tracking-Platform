@@ -1,6 +1,6 @@
 import React from "react";
 import CalendarLayout from "@/components/calendar/calendarLayout";
-import { fetchStudentById, fetchUser } from "@/app/lib/data";
+import { fetchStudentById } from "@/app/lib/data";
 import { Button } from "@/components/ui/button";
 import Calendar from "@/components/calendar/calendar";
 
@@ -8,7 +8,7 @@ export const metadata = {
   title: "View Attendance | STP",
 };
 
-export default async function page(params) {
+export default async function Page({ params }) {
   console.log(params, "is the params");
   const { id } = params.params;
   console.log(id, "is the id");
@@ -20,8 +20,8 @@ export default async function page(params) {
       <header className="flex justify-between items-center p-4 border-b">
         <div className="flex flex-col space-x-4">
           <h1 className="text-2xl font-bold">
-            View Attendace for: {student.username}
-          </h1>
+            View Attendance for: {student.username} 
+           </h1>
           <p className="text-sm font-semibold">
             Admission Number: {student.admissionNumber}
           </p>
@@ -33,9 +33,8 @@ export default async function page(params) {
           })}
         </div>
       </header>
-      {/* <CalendarLayout /> */}
       <div className="flex-grow p-4 h-full">
-        <Calendar />
+        <Calendar attendance={student.attendance} />
       </div>
     </div>
   );
