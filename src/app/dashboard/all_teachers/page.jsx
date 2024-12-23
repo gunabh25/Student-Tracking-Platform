@@ -28,10 +28,10 @@ export default async function page() {
       status: user.isActive ? "active" : "inactive",
       createdDate: user.createdAt,
       id: user._id.toString(),
-      roll_Number: user.rollNumber,
-      admission_Number: user.admissionNumber,
-      year: user.year,
-      section: user.section,
+      teacherId: user.teacherId,
+phone: user.phone,
+
+
     }));
     console.log(formattedData, "aa gaya");
     return formattedData;

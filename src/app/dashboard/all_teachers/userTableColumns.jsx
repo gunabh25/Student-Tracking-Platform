@@ -53,21 +53,12 @@ export const columns = [
     header: "Name",
   },
   {
-    accessorKey: "admission_Number",
-    header: "Admission Number",
+    accessorKey: "teacherId",
+    header: "Teacher ID",
+  },{
+    accessorKey: "phone",
+    header: "Phone Number",
   },
-{
-accessorKey: "roll_Number",
-header: "Roll Number",
-},
-{
-  accessorKey: "year",
-  header: "Year",
-},
-{
-  accessorKey: "section",
-  header: "Section",
-},
   // {
   //   accessorKey: "  status",
   //   header: "Status",
@@ -136,17 +127,18 @@ header: "Roll Number",
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-              <Link href={`/dashboard/all_students/${row.original.id}`}>
+              <Link href={`/dashboard/all_teachers/${row.original.id}`}>
                 <DropdownMenuItem>
                   <EditIcon className="mr-2 size-4" />
-                  Edit Student details
+                 View Teacher Profile
                 </DropdownMenuItem>
-              </Link><Link href={`/dashboard/all_students/${row.original.id}/calendar_view`}>
+              </Link>
+              {/* <Link href={`/dashboard/all_students/${row.original.id}/calendar_view`}>
                 <DropdownMenuItem>
                   <Calendar className="mr-2 size-4" />
                   View Attendance calendar
                 </DropdownMenuItem>
-              </Link>
+              </Link> */}
 
               {/* {session?.user?.username === row.original.name ? (
                 <AlertDialog>

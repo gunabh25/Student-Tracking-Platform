@@ -15,7 +15,7 @@ export default async function HomePageGreeting() {
 
 
 const { user } = await auth();
-console.log(user, "is the recieved user");
+console.log(user, "is the recieved user through const { user } = await auth();");
 
   const getGreeting = () => {
     const currentTime = new Date().getHours();
@@ -48,7 +48,7 @@ console.log(user, "is the recieved user");
         <div className="flex-col">
           <CardContent className="flex flex-row justify-between">
             <CardDescription className="mr-10">
-          ID: TR-1234 
+         Branch: {user?.companyID}
                     </CardDescription>
             <CardDescription className="flex-end">
               {/* {currentDateTime} */}

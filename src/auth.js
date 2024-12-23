@@ -26,7 +26,7 @@ const login = async (credentials) => {
       username: credentials.username,
       companyID: credentials.companyid,
     }) || await Student.findOne({
-      admissionNumber: credentials.username,
+      username: credentials.username,
       companyID: credentials.companyid,
     });
 

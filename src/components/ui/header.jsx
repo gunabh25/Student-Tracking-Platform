@@ -12,6 +12,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,7 +20,10 @@ import {
   PanelLeft,
   Search,
   Settings,
-  Users2,
+  User,
+  Mail,
+  LogOut,
+  Building,
   Package,
   ContactRoundIcon,
   LayoutDashboardIcon,
@@ -127,44 +131,63 @@ export default async function Header() {
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
           />
         </div> */}
-        <div className="relative flex ml-auto flex-1 md:grow-0 space-x-4">       
-           <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Avatar className="cursor-pointer size-9">
-              <AvatarImage src={user.img || "/noavatar.png"} />
-              <AvatarFallback>EU</AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>
-              <span className="text-primary/70">Username: </span>
-              {user.username}
-            </DropdownMenuLabel>
-            <DropdownMenuLabel>
-              <span className="text-primary/70">Email:</span> {user.email}
-            </DropdownMenuLabel>
-            <DropdownMenuLabel>
-              <span className="text-primary/70">Company ID:</span>{" "}
-              {user.companyID}
-            </DropdownMenuLabel>
-
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <form
-                className="w-full"
-                action={async () => {
-                  "use server";
-                  await signOut();
-                }}
-              >
-                <button className="w-full text-left hover:text-red-500 transition">
-                  {" "}
-                  Logout
-                </button>
-              </form>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="relative flex ml-auto flex-1 md:grow-0 w-full space-x-4">       
+        <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+          <Avatar className="h-10 w-10">
+            <AvatarImage src={user.img || "/noavatar.png"} alt={user.username} />
+            <AvatarFallback>{user.username.slice(0, 2).toUpperCase()}</AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-fit" align="end" forceMount>
+        {/* <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">{user.username}</p>
+            <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+          </div>
+        </DropdownMenuLabel> */}
+        {/* <DropdownMenuSeparator /> */}
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <User className="mr-2 h-4 w-4" />
+            <span>{user.username}</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Mail className="mr-2 h-4 w-4" />
+            <span>{user.email}</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Building className="mr-2 h-4 w-4" />
+            <span>{user.companyID}</span>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        {user.isStudent && (
+          <DropdownMenuItem>
+            <Link href="/dashboard/student_profile">
+                <User className="mr-2 h-4 w-4" />
+                <span>view Profile</span>
+            </Link>
+          </DropdownMenuItem>
+        )}
+        <DropdownMenuItem>
+          <form
+            className="w-full"
+            action={async () => {
+              "use server";
+              await signOut();
+            }}
+          >
+            <button className="w-full text-left flex items-center">
+              <LogOut className="mr-2 h-4 w-4 transition hover:text-destructive" />
+              <span>Log out</span>
+            </button>
+          </form>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
         <ThemeToggle />
         </div>
       </nav>

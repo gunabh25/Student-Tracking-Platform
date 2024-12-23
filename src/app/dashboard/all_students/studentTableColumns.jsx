@@ -53,11 +53,11 @@ export const columns = [
     header: "Name",
   },
   {
-    accessorKey: "admission_Number",
+    accessorKey: "admissionNumber",
     header: "Admission Number",
   },
 {
-accessorKey: "roll_Number",
+accessorKey: "rollNumber",
 header: "Roll Number",
 },
 {
@@ -75,10 +75,10 @@ header: "Roll Number",
   //     <div className="capitalize">{row.getValue("status")}</div>
   //   ),
   // },
-  {
-    accessorKey: "email",
-    header: "Email",
-  },
+  // {
+  //   accessorKey: "email",
+  //   header: "Email",
+  // },
   // {
   //   accessorKey: "createdDate",
   //   header: "Created On",

@@ -69,16 +69,24 @@ async function page() {
   // Render the page
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 min-h-screen">
       {/* <h1 className="text-3xl md:text-5xl font-semibold">Dashboard</h1> */}
       <HomePageGreeting />
 
-  <DataTable
-        data={data}
-        columns={columns}
-        addNewLink="/dashboard/all_students/add/"
-        addNewText="Add new user"
-      />
+      {session.user.isStudent ? (
+        <div>
+          {/* Render a different UI for students */}
+          <h1>
+            Welcome, {session.user.username} </h1>
+        </div>
+      ) : (
+        <DataTable
+          data={data}
+          columns={columns}
+          addNewLink="/dashboard/all_students/add/"
+          addNewText="Add new user"
+        />
+      )}
     </div>
   );
 }

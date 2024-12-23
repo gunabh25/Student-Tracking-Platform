@@ -2,7 +2,7 @@ import React from "react";
 import { fetchStudents } from "@/app/lib/data";
 import { auth } from "@/auth";
 import { DataTable } from "@/components/ui/data-table";
-import { columns } from "@/app/dashboard/all_teachers/userTableColumns";
+import { columns } from "@/app/dashboard/all_students/studentTableColumns";
 
 export const metadata = {
   title: "All Students | STP",
