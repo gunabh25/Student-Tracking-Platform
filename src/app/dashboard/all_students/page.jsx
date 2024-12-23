@@ -21,14 +21,18 @@ export default async function page() {
     console.log(response, "mil gaya");
   
     const formattedData = response.filter(student => student.companyID.toString() === companyID).map((student) => ({
-      firstName: student.firstName,
-      lastName: student.lastName,
+      // firstName: student.firstName,
+      // lastName: student.lastName,
+      name: student.username,
+      profile_Picture: student.img,
+      // branch: student.companyID,
       year: student.year,
       section: student.section,
       admissionNumber: student.admissionNumber,
+      rollNumber: student.rollNumber,
       address: student.address,
       phone: student.phone,
-      attendance: student.attendance,
+      attendance: student.attendance.toString(),
       id: student._id.toString(),
     }));
   
