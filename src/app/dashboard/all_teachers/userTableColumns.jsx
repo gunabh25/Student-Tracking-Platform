@@ -33,6 +33,8 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { deleteUser } from "@/app/lib/actions";
 
+const {noAvatar} = "../public/noavatar.png";
+
 // Define the columns for the user table
 export const columns = [
   {
@@ -41,7 +43,7 @@ export const columns = [
     cell: ({ row }) => {
       return (
         <img
-          src={row.original.profile_Picture || "/noavatar.png"}
+          src={row.original.profile_Picture || {noAvatar}}
           alt="User profile picture"
           className="w-10 h-10 rounded-full border"
         />
