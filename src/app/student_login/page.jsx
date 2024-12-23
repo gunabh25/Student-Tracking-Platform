@@ -7,7 +7,7 @@ export const metadata = {
 
 function page() {
   return (
-    <div>
+    <div className="h-screen flex items-center justify-center">
       <StudentLoginForm/>
     </div>
   );

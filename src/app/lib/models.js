@@ -72,17 +72,16 @@ const userSchema = new mongoose.Schema(
 
 const studentSchema = new mongoose.Schema(
   {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
+  username: {
+    type: String,
+    required: true,
+  },
     companyID: {
       type: String,
       required: true,
+    },
+    img: {
+      type: String,
     },
     year: {
       type: Number,
