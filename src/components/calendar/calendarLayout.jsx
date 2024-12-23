@@ -1,7 +1,7 @@
 import React from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import Calendar from './Calendar'
+import Calendar from '@/components/calendar/calendar'
 
 export default function CalendarLayout() {
   return (
