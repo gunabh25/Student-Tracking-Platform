@@ -41,7 +41,7 @@ export const fetchStudentById = async (id) => {
     await connectToDB();
     // Find the student with the given ID
     const student = await Student.findOne({ _id: id });
-    console.log(student);
+    console.log(student, "jo student aaya");
     return student;
   } catch (err) {
     console.log(err);

@@ -36,6 +36,11 @@ import {
 import { DataTable } from "@/components/ui/data-table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import CalendarLayout from "@/components/calendar/calendarLayout";
+import LocationAccessPopup from "@/components/locationAccessPopup";
+
+export const metadata = {
+  title: "Dashboard | STP",
+};
 
 async function page() {
   const session = await auth();
@@ -77,7 +82,8 @@ async function page() {
       {session.user.isStudent ? (
         <div>
           {/* Render a different UI for students */}
-        <CalendarLayout/>
+          <CalendarLayout />
+          <LocationAccessPopup />
         </div>
       ) : (
         <DataTable

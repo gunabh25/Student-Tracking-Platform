@@ -1,152 +1,116 @@
-// 'use client'
+"use client";
+import React, { useState } from "react";
+import { Calendar as BigCalendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import { CalendarIcon } from 'lucide-react'
+import { toast } from "sonner";
 
-// import React, { useState } from 'react'
-// import { Calendar as BigCalendar, momentLocalizer } from 'react-big-calendar'
-// import moment from 'moment'
-// import 'react-big-calendar/lib/css/react-big-calendar.css'
-// // import { getEvents } from '../utils/events'
 
-// // Setup the localizer for BigCalendar
-// const localizer = momentLocalizer(moment)
+const localizer = momentLocalizer(moment);
 
-// export default function Calendar() {
-//   const [date, setDate] = useState(new Date())
-
-//   const onNavigate = (newDate) => {
-//     setDate(newDate)
-//   }
-
-//   return (
-//     <div className="h-full">
-//       <BigCalendar
-//         localizer={localizer}
-//         // events={getEvents()}
-//         startAccessor="start"
-//         endAccessor="end"
-//         style={{ height: '100%' }}
-//         date={date}
-//         onNavigate={onNavigate}
-//         views={['month']}
-//         className="shadow-lg rounded-lg"
-//       />
-//     </div>
-//   )
-// }
-
-'use client'
-
-import React, { useState } from 'react'
-import { Calendar as BigCalendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { useSession } from 'next-auth/react'
-
-// Setup the localizer for BigCalendar
-const localizer = momentLocalizer(moment)
-
-export default function Calendar() {
-  const [date, setDate] = useState(new Date())
-  const [attendance, setAttendance] = useState({}) // Object to track attendance by date
-  const [showPopup, setShowPopup] = useState(false) // Control modal visibility
-  const [selectedDate, setSelectedDate] = useState(null) // Date for which attendance is being marked
-  const [selectedStudent, setSelectedStudent] = useState(null) // Currently selected student
- const {data: session} = useSession()
+const Calendar = ({ attendance = [] }) => {
+  const [date, setDate] = useState(new Date());
+  const [markedAttendance, setMarkedAttendance] = useState(attendance); // Track attendance by date
+  const [showPopup, setShowPopup] = useState(false); // Control modal visibility
+  const [selectedDate, setSelectedDate] = useState(null); // Date for which attendance is being marked
+  const [showDialog, setShowDialog] = useState(true);
 
   const onNavigate = (newDate) => {
-    setDate(newDate)
-  }
+    setDate(newDate);
+  };
 
   const onSelectSlot = (slotInfo) => {
-    setSelectedDate(slotInfo.start)
-    setShowPopup(true)
-  }
+    const currentDate = new Date();
+    const selected = new Date(slotInfo.start);
+
+    // Check if the selected date is today and within the allowed time range
+    if (
+      selected.toDateString() === currentDate.toDateString() &&
+      currentDate.getHours() >= 5 &&
+      currentDate.getHours() < 17
+    ) {
+      setSelectedDate(slotInfo.start);
+      setShowPopup(true);
+    } else {
+      toast.error("You can only mark attendance for today between 9:00 AM and 5:00 PM.");
+    }
+  };
 
   const closePopup = () => {
-    setShowPopup(false)
-    setSelectedDate(null)
-    setSelectedStudent(null)
-  }
+    setShowPopup(false);
+    setSelectedDate(null);
+  };
 
   const markAttendance = () => {
-    if (!selectedStudent) return
-    const formattedDate = moment(selectedDate).format('YYYY-MM-DD')
-    setAttendance((prev) => ({
+    const formattedDate = moment(selectedDate).format('YYYY-MM-DD');
+    setMarkedAttendance((prev) => [
       ...prev,
-      [formattedDate]: {
-        ...prev[formattedDate],
-        [selectedStudent]: !prev[formattedDate]?.[selectedStudent],
-      },
-    }))
-    closePopup()
-  }
+      { date: formattedDate, status: 'Present' },
+    ]);
+    closePopup();
+  };
 
-  const students = ['Alice', 'Bob', 'Charlie', 'David'] // Replace with your student list
+  const events = markedAttendance.map((att) => ({
+    title: att.status === 'Present' ? '✅' : att.status,
+    start: new Date(att.date),
+    end: new Date(att.date),
+    allDay: true,
+  }));
 
   return (
-    <div className="h-full">
+    <div>
       <BigCalendar
         localizer={localizer}
+        events={events}
         startAccessor="start"
         endAccessor="end"
+        style={{ height: 500 }}
         selectable
-        onSelectSlot={onSelectSlot}
-        style={{ height: '100%' }}
-        date={date}
         onNavigate={onNavigate}
-        views={['month']}
-        className="shadow-lg rounded-lg"
+        onSelectSlot={onSelectSlot}
       />
-
-      {/* <div className="mt-4">
-        <h2 className="text-xl font-bold">Select a student to mark attendance:</h2>
-        <ul className="mt-2 grid grid-cols-2 gap-4">
-          {students.map((student) => (
-            <li key={student}>
-              <button
-                onClick={() => {
-                  setSelectedStudent(student)
-                  setShowPopup(true)
-                }}
-                className="px-4 py-2 bg-blue-500 text-white rounded w-full text-left"
-              >
-                {student}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div> */}
-
       {showPopup && (
-        <div className="fixed z-10 inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-          <div className=" bg-background p-6 rounded-lg w-96">
-            <h2 className="text-xl font-bold mb-4">
-              Mark Attendance for {selectedStudent} on {moment(selectedDate).format('MMMM Do, YYYY')}
-            </h2>
-            <button
-              onClick={markAttendance}
-              className={`px-4 py-2 rounded w-full mb-4 ${
-                attendance[moment(selectedDate).format('YYYY-MM-DD')]?.[selectedStudent]
-                  ? 'bg-green-500 text-white'
-                  : 'bg-gray-300 text-black'
-              }`}
-            >
-              {attendance[moment(selectedDate).format('YYYY-MM-DD')]?.[selectedStudent]
-                ? 'Mark Absent'
-                : 'Mark Present'}
-            </button>
-            <button
-              onClick={closePopup}
-              className="mt-4 px-4 py-2 bg-destructive text-primary rounded w-full"
-            >
-              Close
-            </button>
-          </div>
-        </div>
+        // <div className="popup">
+        //   <p>Mark attendance for: {selectedDate.toDateString()}</p>
+        //   <button onClick={markAttendance}>Mark Present</button>
+        //   <button onClick={closePopup}>Close</button>
+        // </div>
+        <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle className="flex items-center gap-2">
+            <CalendarIcon className="h-5 w-5" />
+            Mark Attendance
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            You are about to mark attendance for:
+            <span className="block mt-1 font-semibold text-foreground">
+              {selectedDate.toDateString()}
+            </span>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={markAttendance}>
+            Mark Present
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
       )}
     </div>
-  )
-}
+  );
+};
 
-
-
-
+export default Calendar;
