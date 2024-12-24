@@ -17,7 +17,7 @@ export default async function page() {
   // Function to fetch and format user data
   async function getData() {
     const response = await fetchUsers("", companyID);
-
+    
     console.log(response, "mil gaya");
 
     const formattedData = response.users.map((user) => ({
@@ -29,11 +29,9 @@ export default async function page() {
       createdDate: user.createdAt,
       id: user._id.toString(),
       teacherId: user.teacherId,
-phone: user.phone,
-
-
+      phone: user.phone,
     }));
-    console.log(formattedData, "aa gaya");
+    // console.log(formattedData, "aa gaya");
     return formattedData;
   }
 
@@ -42,13 +40,17 @@ phone: user.phone,
 
   // Render the page
   return (
-    <div>
+    <div className="min-h-screen">
       {/* Page title */}
       <div className="text-4xl tracking-wider font-semibold"> All Teachers</div>
       {/* Page description */}
-      <p className="text-sm text-muted-foreground">
-        View all faculty members present in your department: {session.user.companyID}
-      </p>
+      <div>
+        <p className="text-sm text-muted-foreground">
+          View all faculty members present in your department:{" "}
+          {session.user.companyID}
+        </p>
+        {/* <p>Total members: {data?.count} </p> */}
+      </div>
 
       {/* User table */}
       <DataTable

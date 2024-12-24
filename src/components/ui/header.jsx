@@ -125,7 +125,7 @@ export default async function Header() {
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
             <AvatarImage src={user.img || "/noavatar.png"} alt={user.username} />
-            <AvatarFallback>{user.username.slice(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarFallback>{user.username.slice(0, 1).toUpperCase()}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
