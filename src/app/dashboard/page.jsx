@@ -61,11 +61,11 @@ async function page() {
       createdDate: user.createdAt,
       id: user._id.toString(),
       roll_Number: user.rollNumber,
-      admission_Number: user.admissionNumber,
-      year: user.year,
-      section: user.section,
+      id: user._id.toString(),
+      teacherId: user.teacherId,
+      phone: user.phone,
     }));
-    console.log(formattedData, "aa gaya");
+    // console.log(formattedData, "aa gaya");
     return formattedData;
   }
 

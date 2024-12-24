@@ -54,11 +54,10 @@ export const fetchStudents = async () => {
   try {
     await connectToDB();
     // Find all students
-        // Count the number of users matching the search criteria
-    const count = await Student.find({ username: { $regex: regex }, companyID }).count();
+    
     const students = await Student.find();
     console.log(students);
-    return (count, students);
+    return students;
   } catch (err) {
     console.log(err);
     throw new Error("Failed to fetch students!");

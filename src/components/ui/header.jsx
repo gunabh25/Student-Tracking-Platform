@@ -78,7 +78,7 @@ export default async function Header() {
                   key={item.id}
                   className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                 >
-                  {item.logo} {item.name}
+             {item.name}
                 </Link>
               ))}
             </nav>
