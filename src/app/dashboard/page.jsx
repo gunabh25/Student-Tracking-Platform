@@ -89,8 +89,8 @@ async function page() {
         <DataTable
           data={data}
           columns={columns}
-          addNewLink="/dashboard/all_students/add/"
-          addNewText="Add new user"
+          // addNewLink="/dashboard/all_students/add/"
+          // addNewText="Add new user"
         />
       )}
     </div>
